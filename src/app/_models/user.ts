@@ -2,6 +2,9 @@
     id: number;
     username: string;
     password: string;
-    firstName: string;
-    lastName: string;
+    famille: string;
+    age: number;
+    couleur: string;
+    friendsWithMe: string;
+    myFriends: string;
 }
