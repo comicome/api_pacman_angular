@@ -1,5 +1,5 @@
-# angular-6-jwt-authentication-example
+Front-end with Angular6 for API REST in this repo https://github.com/comicome/api_pacman
 
-Angular 6 JWT Authentication Example with Webpack 4
+1 - Git Clone the repository
 
-To see a demo and further details go to http://jasonwatmore.com/post/2018/05/23/angular-6-jwt-authentication-example-tutorial# api_pacman_angular
+2 - run npm start in your terminal
