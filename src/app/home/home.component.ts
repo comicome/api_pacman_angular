@@ -1,18 +1,34 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
-
-import { User } from '../_models';
+import { Http, Response, Headers } from '@angular/http';
+import { Observable } from 'rxjs';
+import { Users } from '../_models';
 import { UserService } from '../_services';
+import {FilterPipe} from "../filter.pipe";
 
-@Component({templateUrl: 'home.component.html'})
+
+@Component({
+    selector: 'user',
+    templateUrl: 'home.component.html',
+    providers: [FilterPipe]
+})
 export class HomeComponent implements OnInit {
-    users: User[] = [];
+    currentUser: Users;
+    users: Observable<Users[]>;
 
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService, private http: Http) {
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    }
+
 
     ngOnInit() {
-        this.userService.getAll().pipe(first()).subscribe(users => { 
-            this.users = users; 
-        });
+        this.loadUsers();
     }
+
+
+    loadUsers() {
+        this.users = this.userService.getPacman();
+    }
+
+
+
 }

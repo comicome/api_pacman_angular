@@ -1,0 +1,38 @@
+<h1>Profil de {{ user.username }}</h1>
+<div>
+    API Endpoint http://127.0.0.1:8000/user/{{user.id}}/show
+</div>
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+    <tr>
+        <td>
+            Nom
+        </td>
+        <td>
+            Age
+        </td>
+        <td>
+            Nourriture
+        </td>
+        <td>
+            Couleur
+        </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.age }} ans</td>
+        <td>{{ user.nourriture }}</td>
+        <td>{{ user.couleur }}</td>
+    </tr>
+    </tbody>
+
+</table>
+<div>
+    <p><a [routerLink]="['/home']">Home</a></p>
+    <p><a [routerLink]="['/login']">Déconnexion</a></p>
+</div>

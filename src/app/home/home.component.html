@@ -1,17 +1,57 @@
-﻿<h1>Home</h1>
+﻿<h1>Bonjour,{{currentUser.username}}Recherchez des amis</h1>
 <div>
-    Users from secure api end point:
-    <ul>
-        <li *ngFor="let user of users">{{user.age}} {{user.username}}</li>
-    </ul>
+    API Endpoint http://127.0.0.1:8000/user/
 </div>
-<div class="form-group">
-    <label>Rechercher des amis</label>
-    <input type="text" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+<form class="form-group" id="filter">
+    <label>Recherchez un utilisateur :</label>
+    <input type="text" [(ngModel)]="item" placeholder="Patoche" name="nom" class="form-control"/>
+</form>
+
+
+
+<table class="table table-bordered table-striped" *ngIf="users | async as users; else loading;">
+
+    <thead>
+    <tr>
+        <td>
+            Id
+        </td>
+        <td>
+            Nom
+        </td>
+        <td>
+            Age
+        </td>
+        <td>
+            Nourriture
+        </td>
+        <td>
+            Couleur
+        </td>
+        <td>
+            Amis
+        </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let user of users | filter:item">
+        <td><a [routerLink]="['/profil/', user.id]">{{ user.id }}</a></td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.age }} ans</td>
+        <td>{{ user.nourriture }}</td>
+        <td>{{ user.couleur }}</td>
+        <td><a [routerLink]="['/login']">Ajouter à mes amis</a></td>
+    </tr>
+    </tbody>
+
+</table>
+<div>
+    <p><a [routerLink]="['/login']" class="btn">Déconnexion</a></p>
+    <p><a [routerLink]="['/profil/']" class="btn">Mon profil</a></p>
 </div>
-<div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary">Valider</button>
-    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-</div>
-<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-<p><a [routerLink]="['/login']">Déconnexion</a></p>
+<ng-template #loading>
+    <div>
+        Chargement...
+    </div>
+</ng-template>
