@@ -1,4 +1,4 @@
-﻿<h1>Bonjour,{{currentUser.username}}Recherchez des amis</h1>
+﻿<h1>Recherchez des amis</h1>
 <div>
     API Endpoint http://127.0.0.1:8000/user/
 </div>
@@ -28,9 +28,6 @@
         <td>
             Couleur
         </td>
-        <td>
-            Amis
-        </td>
     </tr>
     </thead>
 
@@ -41,14 +38,12 @@
         <td>{{ user.age }} ans</td>
         <td>{{ user.nourriture }}</td>
         <td>{{ user.couleur }}</td>
-        <td><a [routerLink]="['/login']">Ajouter à mes amis</a></td>
     </tr>
     </tbody>
 
 </table>
 <div>
     <p><a [routerLink]="['/login']" class="btn">Déconnexion</a></p>
-    <p><a [routerLink]="['/profil/']" class="btn">Mon profil</a></p>
 </div>
 <ng-template #loading>
     <div>
