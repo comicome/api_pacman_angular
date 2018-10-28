@@ -1,10 +1,11 @@
-<h1>Profil de {{ user.username }}</h1>
+<h1>Profil de {{ currentUser.username }}</h1>
 <div>
-    API Endpoint http://127.0.0.1:8000/user/{{user.id}}/show
+    API Endpoint http://127.0.0.1:8000/user/{{currentUser.id}}/show
 </div>
-<div *ngIf="currentUser.id == user.id">
+<div>
     <a [routerLink]="['/edit/profil', currentUser.id]">Modifier mon profil</a>
 </div>
+
 <table class="table table-bordered table-striped">
 
     <thead>
@@ -26,10 +27,10 @@
 
     <tbody>
     <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.age }} ans</td>
-        <td>{{ user.nourriture }}</td>
-        <td>{{ user.couleur }}</td>
+        <td>{{ currentUser.username }}</td>
+        <td>{{ currentUser.age }} ans</td>
+        <td>{{ currentUser.nourriture }}</td>
+        <td>{{ currentUser.couleur }}</td>
     </tr>
     </tbody>
 

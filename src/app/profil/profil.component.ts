@@ -8,10 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'user',
-    templateUrl: 'users.component.html',
+    templateUrl: 'profil.component.html',
 })
-export class UsersComponent implements OnInit {
-    currentUser: User;
+export class ProfilComponent implements OnInit {
+    currentUser: any;
     user: {};
     id: number;
     private sub: any;
@@ -20,22 +20,14 @@ export class UsersComponent implements OnInit {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
 
-    getUserDetails(id) {
-        this.userService.getUser(id)
-            .subscribe(data => {
-                this.user = data;
-            });
-    }
-
-    addFriend(currentUserId, userId) {
-        this.userService.addFriendUser(currentUserId, userId)
-    }
 
     getCurrentUserDetails() {
+
         let jwt = localStorage.getItem('currentUser');
         let jwtData = jwt.split('.')[1];
         let decodedJwtJsonData = window.atob(jwtData);
         let decodedJwtData = JSON.parse(decodedJwtJsonData);
+
         let userId = decodedJwtData.userId;
 
         this.userService.getUser(userId)
@@ -46,8 +38,6 @@ export class UsersComponent implements OnInit {
 
 
     ngOnInit() {
-        this.getUserDetails(this.route.snapshot.params['id']);
-        this.addFriend(this.currentUser.id ,this.route.snapshot.params['id']);
         this.getCurrentUserDetails();
     }
 }

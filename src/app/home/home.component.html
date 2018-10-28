@@ -1,4 +1,5 @@
-﻿<h1>Recherchez des amis</h1>
+﻿<h1>Bonjour {{currentUser.username}}</h1>
+<h2>Recherchez des amis</h2>
 <div>
     API Endpoint http://127.0.0.1:8000/user/
 </div>
@@ -6,9 +7,6 @@
     <label>Recherchez un utilisateur :</label>
     <input type="text" [(ngModel)]="item" placeholder="Patoche" name="nom" class="form-control"/>
 </form>
-
-
-
 <table class="table table-bordered table-striped" *ngIf="users | async as users; else loading;">
 
     <thead>
@@ -28,22 +26,26 @@
         <td>
             Couleur
         </td>
+        <td>
+            Amis
+        </td>
     </tr>
     </thead>
 
     <tbody>
     <tr *ngFor="let user of users | filter:item">
-        <td><a [routerLink]="['/profil/', user.id]">{{ user.id }}</a></td>
+        <td><a [routerLink]="['/user/', user.id]">{{ user.id }}</a></td>
         <td>{{ user.username }}</td>
         <td>{{ user.age }} ans</td>
         <td>{{ user.nourriture }}</td>
         <td>{{ user.couleur }}</td>
+        <td *ngIf="currentUser.id != user.id"><a [routerLink]="[currentUser.id + '/add/' + user.id]" class="btn">Ajouter à mes amis</a></td>
     </tr>
     </tbody>
-
 </table>
 <div>
     <p><a [routerLink]="['/login']" class="btn">Déconnexion</a></p>
+    <p><a [routerLink]="['/profil/', currentUser.id ]" class="btn">Mon profil</a></p>
 </div>
 <ng-template #loading>
     <div>

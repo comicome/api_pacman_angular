@@ -1,23 +1,21 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, Response, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-
-import { Users } from '../_models/user.interface';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import { User } from '../_models';
 
 
 @Injectable()
 export class UserService {
-    constructor(private http: Http) {
+    constructor(private http: Http, private router: Router, private httpClient: HttpClient,) {
     }
-
-    // the username of the logged in user
-    public username: string;
 
     // error messages received from the login attempt
     public errors: any = [];
 
-    getPacman(): Observable<Users[]> {
+    getPacmans(): Observable<User[]> {
         return this.http.get(`${config.apiUrl}user`, `Authorization : Bearer ${localStorage.currentUser}`)
             .pipe(map((response: Response) => {
                     return response.json();
@@ -25,7 +23,6 @@ export class UserService {
                 catchError((error: any) => throwError(error.json())
                 ));
     }
-
 
     getUser(id: string): Observable<any> {
         return this.http.get(`${config.apiUrl}user/` + id + `/show`,`Authorization : Bearer ${localStorage.currentUser}`).pipe(
@@ -36,20 +33,19 @@ export class UserService {
             ));
     }
 
-    private extractData(res: Response) {
-        let body = res;
-        return body || { };
+
+    addFriendUser(currentUserId : string, UserId : string ){
+        return this.http.put(`${config.apiUrl}user/addFriend/`+currentUserId + `/`+UserId, `Authorization : Bearer ${localStorage.currentUser}`)
     }
 
-    register(user: Users) {
-        return this.http.post(`${config.apiUrl}register`, user);
-    }
-
-    addFriendUser(id: string){
-        return this.http.put(`${config.apiUrl}/user/` + id, `Authorization : Bearer ${localStorage.currentUser}`)
-    }
-
-    update(user: Users) {
-        return this.http.put(`${config.apiUrl}/user/` + user.id, user, `Authorization : Bearer ${localStorage.currentUser}`);
+    update(currentUserId : number, nourriture: string, famille: string, age: number, couleur: string ) {
+        const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.currentUser}`)
+        console.log('put');
+        return this.httpClient.put(`${config.apiUrl}user/edit/profil/` + currentUserId,
+            { nourriture: nourriture, famille: famille, age: age, couleur: couleur }, {headers})
+            .pipe(map(user => {
+                this.router.navigate(['/home']);
+                return user;
+            }));
     }
 }

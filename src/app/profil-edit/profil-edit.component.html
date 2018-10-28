@@ -1,0 +1,34 @@
+<h1>Edition du profil</h1>
+<div *ngIf="currentUser">
+    API Endpoint http://127.0.0.1:8000/user/edit/{{currentUser.id}}
+</div>
+
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form-group">
+
+    <div class="form-group">
+        <label>Username:</label>
+        <input type="text" class="form-control" formControlName="username" value="{{currentUser.username}}" name="username">
+    </div>
+    <div class="form-group">
+        <label>Famille:</label>
+        <input type="text" class="form-control" formControlName="famille" value="{{currentUser.famille}}" name="famille">
+    </div>
+    <div class="form-group">
+        <label>Age: </label>
+        <input type="number" class="form-control" formControlName="age" value="{{currentUser.age}}" name="age">
+    </div>
+    <div class="form-group">
+        <label>Couleur:</label>
+        <input type="text" class="form-control" formControlName="couleur" value="{{currentUser.couleur}}" name="couleur">
+    </div>
+    <div class="form-group">
+        <label>Nourriture:</label>
+        <input type="text" class="form-control" formControlName="nourriture" value="{{currentUser.nourriture}}" name="couleur">
+    </div>
+    <button type="submit" class="btn btn-primary" >Modifier le profil</button>
+
+</form>
+<div>
+    <p><a [routerLink]="['/home']">Home</a></p>
+    <p><a [routerLink]="['/login']">Déconnexion</a></p>
+</div>

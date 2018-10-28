@@ -14,6 +14,10 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { UsersComponent } from './user/users.component';
 import {FilterPipe} from "./filter.pipe";
+import {RegisterComponent} from "./register";
+import {ProfilComponent} from "./profil";
+import {ProfilEditComponent} from "./profil-edit";
+import {AlertService} from "./_services/alert.service";
 
 @NgModule({
     imports: [
@@ -28,11 +32,15 @@ import {FilterPipe} from "./filter.pipe";
         AppComponent,
         HomeComponent,
         LoginComponent,
+        RegisterComponent,
         UsersComponent,
+        ProfilComponent,
+        ProfilEditComponent,
         FilterPipe,
     ],
     providers: [
         UserService,
+        AlertService,
         AuthGuard,
         AuthenticationService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
