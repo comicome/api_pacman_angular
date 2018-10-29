@@ -21,12 +21,7 @@ export class AuthenticationService {
     }
 
     register(username: string, password: string, email: string, nourriture: string, famille: string, age: number, couleur: string ) {
-        console.log(username);
         return this.http.post<any>(`${config.apiUrl}pacman/register`, { username: username, password: password, email: email, nourriture: nourriture, famille: famille, age: age, couleur: couleur })
-            .pipe(map(user => {
-                this.router.navigate(['/login']);
-                return user;
-            }));
     }
 
     logout() {

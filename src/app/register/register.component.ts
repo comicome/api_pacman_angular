@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
@@ -10,12 +10,10 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-    returnUrl: string;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute,
         private authenticationService: AuthenticationService,
         private alertService: AlertService) { }
 
@@ -23,18 +21,12 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(3)]],
-            email: [''],
-            nourriture: [''],
-            famille: [''],
-            age: [''],
-            couleur: [''],
+            email: ['', Validators.required, Validators.minLength(6)],
+            nourriture: ['', Validators.required, Validators.minLength(3)],
+            famille: ['', Validators.required, Validators.minLength(3)],
+            age: ['', Validators.required, Validators.min(1), Validators.max(120)],
+            couleur: ['', Validators.required, Validators.minLength(3)],
         });
-
-        // reset login status
-        this.authenticationService.logout();
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
 
@@ -49,7 +41,6 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        console.log(this.registerForm.value);
         this.authenticationService.register(this.f.username.value, this.f.password.value, this.f.email.value, this.f.nourriture.value, this.f.famille.value, this.f.age.value, this.f.couleur.value)
             .pipe(first())
             .subscribe(
