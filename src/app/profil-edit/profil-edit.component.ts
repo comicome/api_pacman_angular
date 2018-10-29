@@ -57,7 +57,6 @@ export class ProfilEditComponent implements OnInit {
         }
 
         this.loading = true;
-        console.log(this.editForm.value);
         this._userService.update(this.currentUser.id, this.f.nourriture.value, this.f.famille.value, this.f.age.value, this.f.couleur.value)
             .pipe(first())
             .subscribe(

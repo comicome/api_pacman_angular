@@ -40,11 +40,9 @@ export class UserService {
 
     update(currentUserId : number, nourriture: string, famille: string, age: number, couleur: string ) {
         const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.currentUser}`)
-        console.log('put');
         return this.httpClient.put(`${config.apiUrl}user/edit/profil/` + currentUserId,
             { nourriture: nourriture, famille: famille, age: age, couleur: couleur }, {headers})
             .pipe(map(user => {
-                this.router.navigate(['/home']);
                 return user;
             }));
     }

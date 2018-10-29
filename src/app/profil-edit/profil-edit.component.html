@@ -4,11 +4,6 @@
 </div>
 
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form-group">
-
-    <div class="form-group">
-        <label>Username:</label>
-        <input type="text" class="form-control" formControlName="username" value="{{currentUser.username}}" name="username">
-    </div>
     <div class="form-group">
         <label>Famille:</label>
         <input type="text" class="form-control" formControlName="famille" value="{{currentUser.famille}}" name="famille">
